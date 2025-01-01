@@ -55,16 +55,10 @@ class ProductController extends AbstractController{
     }
 
     #[Route('/delete', name : 'delete')]
-    public function delete(EntityManagerInterface $entityManager, Request $request){
+    public function delete(Request $request){
         $id = (int) $request->get('id');
 
-        $product = $entityManager->getRepository(Product::class)->findOneById($id);
-        if($product){
-            $entityManager->remove($product);
-            $entityManager->flush();
-            $this->addFlash('success', 'Product has been deleted.');
-        }
-        return $this->redirect($this->generateUrl('product.list'));
+        return new Response("<h3>Product delete id : {$id}</h3>");
     }
 
     #[Route('/update', name : 'update')]
