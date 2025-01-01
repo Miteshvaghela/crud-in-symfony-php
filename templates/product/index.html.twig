@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello MainController!{% endblock %}
+
+{% block body %} 
+ {% for message in app.flashes('success') %}
+    <div class="alert alert-success">
+        {{ message }}
+    </div>
+{% endfor %}
+<div class="row">
+    <div class="col-9"><h1 class="text-center">{{ title }}! ✅</h1></div>
+    <div class="col-3"><a href="{{ path('product.create') }}" class="btn btn-primary">Create new product</a></div>    
+</div>
+<div class="row">
+    <div class="content">
+        <table class="table stripe">
+            <tr>
+                <td>Id</td>
+                <td>Name</td>
+                <td>Price</td>
+                <td>Description</td>
+                <td>Product Image</td>
+                <td>Action</td>
+            </tr>
+            {% if products | length > 0 %}
+                {% for product in products %}
+                <tr>
+                    <td>{{ product.id }}</td>
+                    <td>{{ product.name }}</td>
+                    <td>{{ product.price }}</td>
+                    <td>{{ product.description }}</td>
+                    <td>{{ product.image }}</td>
+                    <td>
+                        <a href="{{ path('product.delete', { id : product.id }) }}" class="btn btn-danger">Delete</a>
+                        <a href="{{ path('product.update', { id : product.id }) }}" class="btn btn-warning">Edit</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="6"> <strong class="text-center">No products to show</strong></td>
+                </tr>
+            {% endif%}
+
+        </table>
+    </div>
+</div>
+{% endblock %}
